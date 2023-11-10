@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>  // Pour getch(), si vous êtes sur Windows
+
+// Déclaration des constantes
+#define LIGNES 10
+#define COLONNES 20
+#define NOMBRE_OISEAUX 4
+#define NOMBRE_NIVEAUX 3
+
+// Structure pour les objets du jeu
+struct Objet {
+    char symbole;  // Symbole représentant l'objet
+    // Autres propriétés de l'objet
+};
+
+struct Niveau {
+    struct Objet terrain[LIGNES][COLONNES];  // Plateau de jeu
+    int tempsRestant;  // Temps restant en secondes
+    int oiseauxRestants;  // Nombre d'oiseaux restants à récupérer
+};
+
+struct Joueur {
+    int vies;
+    int score;
+};
+
+// Fonctions pour les fonctionnalités du jeu
+void afficherMenu();
+void reglesDuJeu();
+void lancerNouveauJeu(struct Joueur *joueur);
+void chargerPartie(struct Joueur *joueur);
+void motDePasse(struct Joueur *joueur);
+void afficherScores(struct Joueur *joueur);
+void quitter();
+
+void initialiserNiveau(struct Niveau *niveau);
+void afficherNiveau(struct Niveau *niveau);
+void deplacerSnoopy(struct Niveau *niveau, char direction);
+void deplacerBalle(struct Niveau *niveau);
+void sauvegarderPartie(struct Joueur *joueur, struct Niveau *niveau);
+void chargerPartieFichier(struct Joueur *joueur, struct Niveau *niveau, const char *nomFichier);
+int verifierMotDePasse(const char *motDePasse);
+
+int main() {
+    int choix;
+
+    struct Joueur joueur;
+    struct Niveau niveau;
+
+    do {
+        afficherMenu();
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1:
+                reglesDuJeu();
+                break;
+            case 2:
+                lancerNouveauJeu(&joueur);
+                break;
+            case 3:
+                chargerPartie(&joueur);
+                break;
+            case 4:
+                motDePasse(&joueur);
+                break;
+            case 5:
+                afficherScores(&joueur);
+                break;
+            case 6:
+                quitter();
+                break;
+            default:
+                printf("Choix invalide. Veuillez entrer un nombre entre 1 et 6.\n");
+        }
+    } while (choix != 6);
+
+    return 0;
+}
+
+// Implémentez les fonctions selon vos besoins
+
+void afficherMenu() {
+    // Afficher le menu
+}
+
+void reglesDuJeu() {
+    // Afficher les règles du jeu
+}
+
+void lancerNouveauJeu(struct Joueur *joueur) {
+    // Initialiser le joueur et lancer le premier niveau
+}
+
+void chargerPartie(struct Joueur *joueur) {
+    // Charger une partie sauvegardée
+}
+
+void motDePasse(struct Joueur *joueur) {
+    // Demander et vérifier le mot de passe pour accéder à un niveau
+}
+
+void afficherScores(struct Joueur *joueur) {
+    // Afficher les scores
+}
+
+void quitter() {
+    // Libérer les ressources et quitter le programme
+}
+
+// Implémentez les autres fonctions selon les règles du jeu
