@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <windows.h>
+
+#define LARGEUR 20
+#define HAUTEUR 10
+
+// Structure pour représenter la balle
+struct Balle {
+    int x, y;
+    int directionX, directionY;
+};
+
+// Structure pour représenter le personnage
+struct Personnage {
+    int x, y;
+};
+
+// Fonction pour afficher la carte
+void afficherCarte(struct Balle balle, struct Personnage personnage) {
+    system("cls"); // Efface l'écran
+
+    for (int i = 0; i < HAUTEUR; i++) {
+        for (int j = 0; j < LARGEUR; j++) {
+            if (i == 0 || i == HAUTEUR - 1 || j == 0 || j == LARGEUR - 1)
+                printf("#"); // Affiche les bords de la carte
+            else if (i == balle.y && j == balle.x)
+                printf("o"); // Affiche la balle
+            else if (i == personnage.y && j == personnage.x)
+                printf("P"); // Affiche le personnage
+            else
+                printf(" ");
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    struct Balle balle = {2, 2, 1, 1}; // Initialisation de la balle
+    struct Personnage personnage = {LARGEUR / 2, HAUTEUR / 2}; // Initialisation du personnage
+
+    while (1) { // Boucle principale
+        afficherCarte(balle, personnage);
+
+        // Mise à jour de la position de la balle
+        balle.x += balle.directionX;
+        balle.y += balle.directionY;
+
+        // Vérification des collisions avec les bords
+        if (balle.x <= 0 || balle.x >= LARGEUR - 1)
+            balle.directionX *= -1;
+
+        if (balle.y <= 0 || balle.y >= HAUTEUR - 1)
+            balle.directionY *= -1;
+
+        // Gestion de l'entrée utilisateur pour le déplacement du personnage
+        if (_kbhit()) {
+            char touche = _getch();
+            if (touche == 'a' && personnage.x > 1)
+                personnage.x--;
+            else if (touche == 'd' && personnage.x < LARGEUR - 2)
+                personnage.x++;
+            else if (touche == 'w' && personnage.y > 1)
+                personnage.y--;
+            else if (touche == 's' && personnage.y < HAUTEUR - 2)
+                personnage.y++;
+        }
+
+        // Vérification de la collision entre la balle et le personnage
+        if (balle.x == personnage.x && balle.y == personnage.y) {
+            printf("Vous avez perdu!\n");
+            break;
+        }
+
+        Sleep(100); // Pause pour rendre le mouvement visible
+    }
+
+    return 0;
+}
